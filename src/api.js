@@ -30,4 +30,16 @@ SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_id){
 	});
 };
 
+SteamApi.prototype.GetFriendList = function(req, res, steam_id){
+	var path = '/ISteamUser/GetFriendList/v0001/';
+	var params = {
+		key: this.deveploer_key,
+		steamids: steam_id,
+		type: 'json'
+	};
+	this.ApiRequest(hostname, path, params, function(json_response){
+		res.json(json_response);
+	});
+};
+
 module.exports = SteamApi;
