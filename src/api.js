@@ -25,19 +25,18 @@ SteamApi.prototype.ApiRequest = function(hostname, path, params, callback){
 	});
 };
 
-SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_id){
+SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_ids, callback){
+	// steam_ids should be id1,id2,id3...
 	var path = '/ISteamUser/GetPlayerSummaries/v0002/';
 	var params = {
 		key: this.deveploer_key,
-		steamids: steam_id,
+		steamids: steam_ids,
 		type: 'json'
 	};
-	this.ApiRequest(hostname, path, params, function(json_response){
-		res.json(json_response);
-	});
+	this.ApiRequest(hostname, path, params, callback);
 };
 
-SteamApi.prototype.GetFriendList = function(req, res, steam_id, level){
+SteamApi.prototype.GetFriendList = function(req, res, steam_id, callback){
 	var path = '/ISteamUser/GetFriendList/v0001/';
 	var params = {
 		key: this.deveploer_key,
@@ -46,9 +45,7 @@ SteamApi.prototype.GetFriendList = function(req, res, steam_id, level){
 		type: 'json'
 	};
 	
-	this.ApiRequest(hostname, path, params, function(json_response){
-		res.json(json_response);
-	});
+	this.ApiRequest(hostname, path, params, callback);
 };
 
 module.exports = SteamApi;
