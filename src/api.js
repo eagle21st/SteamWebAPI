@@ -21,8 +21,8 @@ SteamApi.prototype.ApiRequest = function(hostname, path, params, callback){
 			callback({error: error});
 		}else if(response.statusCode == 200){
 			callback(JSON.parse(body));
-		}else if(response.statusCode == 401){
-			callback({error: '401'});
+		}else if(response.statusCode != 200){
+			callback({error: 'no response'});
 		}
 	});
 };
