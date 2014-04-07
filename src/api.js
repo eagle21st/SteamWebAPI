@@ -6,7 +6,7 @@ function SteamApi(deveploer_key){
 	this.deveploer_key = deveploer_key;
 }
 
-SteamApi.prototype.ApiRequest = function(hostname, path, params, callback){
+function ApiRequest(hostname, path, params, callback){
 	// params is key:value object
 	var payload = '';
 	for(var key in params){
@@ -25,7 +25,7 @@ SteamApi.prototype.ApiRequest = function(hostname, path, params, callback){
 			callback({error: 'no response'});
 		}
 	});
-};
+}
 
 SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_ids, callback){
 	// steam_ids should be id1,id2,id3...
@@ -35,7 +35,7 @@ SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_ids, callback){
 		steamids: steam_ids,
 		type: 'json'
 	};
-	this.ApiRequest(hostname, path, params, callback);
+	ApiRequest(hostname, path, params, callback);
 };
 
 SteamApi.prototype.GetFriendList = function(req, res, steam_id, callback){
@@ -47,7 +47,7 @@ SteamApi.prototype.GetFriendList = function(req, res, steam_id, callback){
 		type: 'json'
 	};
 	
-	this.ApiRequest(hostname, path, params, callback);
+	ApiRequest(hostname, path, params, callback);
 };
 
 module.exports = SteamApi;
