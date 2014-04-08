@@ -1,7 +1,7 @@
 //  you must have a deployer key to use steam web api
 var request = require('request'),
 	hostname = 'http://api.steampowered.com',
-	utils = require('../libs/utils.js');
+	utils = require('../lib/utils.js');
 
 function SteamApi(deveploer_key){
 	this.deveploer_key = deveploer_key;
