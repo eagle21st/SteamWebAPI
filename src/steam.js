@@ -3,5 +3,5 @@ var api = require('./api');
 
 var steam = exports;
 
-steam.auth = auth;
-steam.api = api;
+steam.Auth = auth;
+steam.Api = api;

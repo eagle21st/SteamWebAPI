@@ -1,6 +1,7 @@
 //  you must have a deployer key to use steam web api
 var request = require('request'),
-	hostname = 'http://api.steampowered.com';
+	hostname = 'http://api.steampowered.com',
+	utils = require('../libs/utils.js');
 
 function SteamApi(deveploer_key){
 	this.deveploer_key = deveploer_key;
@@ -11,7 +12,7 @@ function ApiRequest(hostname, path, params, callback){
 	var payload = '';
 	for(var key in params){
 		if(params[key] === undefined){
-			return callback({error: 'No steamID detected!'});
+			return callback({error: 'API contains invalid params: '+key});
 		}
 		payload += ((payload.indexOf('?')==-1 ? '?':'&')+key+'='+params[key]);
 	}
@@ -21,14 +22,15 @@ function ApiRequest(hostname, path, params, callback){
 			callback({error: error});
 		}else if(response.statusCode == 200){
 			callback(JSON.parse(body));
-		}else if(response.statusCode != 200){
-			callback({error: 'no response'});
+		}else{
+			callback({error: response.statusCode + ': no response'});
 		}
 	});
 }
 
 SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_ids, callback){
 	// steam_ids should be id1,id2,id3...
+	if (utils.isArray(steamids)) steamids = utils.flattenArray(steamids);
 	var path = '/ISteamUser/GetPlayerSummaries/v0002/';
 	var params = {
 		key: this.deveploer_key,
