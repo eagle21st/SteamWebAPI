@@ -30,7 +30,7 @@ function ApiRequest(hostname, path, params, callback){
 
 SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_ids, callback){
 	// steam_ids should be id1,id2,id3...
-	if (utils.isArray(steamids)) steamids = utils.flattenArray(steamids);
+	if (utils.isArray(steam_ids)) steam_ids = utils.flattenArray(steam_ids);
 	var path = '/ISteamUser/GetPlayerSummaries/v0002/';
 	var params = {
 		key: this.deveploer_key,
