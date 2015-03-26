@@ -1,14 +1,15 @@
 //  you must have a deployer key to use steam web api
 var request = require('request'),
 	hostname = 'http://api.steampowered.com',
-	utils = require('../lib/utils.js');
+	utils = require('../lib/utils.js'),
+	Promise = require('bluebird');
 
 function SteamApi(deveploer_key){
 	this.deveploer_key = deveploer_key;
 }
 
-function ApiRequest(hostname, path, params, callback){
-	// params is key:value object
+function ApiRequest(hostname, path, params){
+	var deferred = Promise.defer();
 	var payload = '';
 	for(var key in params){
 		if(params[key] === undefined){
@@ -19,16 +20,17 @@ function ApiRequest(hostname, path, params, callback){
 	var url = hostname + path + payload;
 	request.get(url, function(error, response, body){
 		if(error){
-			callback({error: error});
+			deferred.reject(error);
 		}else if(response.statusCode == 200){
-			callback(JSON.parse(body));
+			deferred.resolve(JSON.parse(body));
 		}else{
-			callback({error: response.statusCode + ': no response'});
+			deferred.reject({error: response.statusCode + ': no response'});
 		}
 	});
+	return deferred.promise;
 }
 
-SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_ids, callback){
+SteamApi.prototype.GetPlayerSummaries = function(steam_ids){
 	// steam_ids should be id1,id2,id3...
 	if (utils.isArray(steam_ids)) steam_ids = utils.flattenArray(steam_ids);
 	var path = '/ISteamUser/GetPlayerSummaries/v0002/';
@@ -37,10 +39,10 @@ SteamApi.prototype.GetPlayerSummaries = function(req, res, steam_ids, callback){
 		steamids: steam_ids,
 		type: 'json'
 	};
-	ApiRequest(hostname, path, params, callback);
+	return ApiRequest(hostname, path, params);
 };
 
-SteamApi.prototype.GetFriendList = function(req, res, steam_id, callback){
+SteamApi.prototype.GetFriendList = function(steam_id){
 	var path = '/ISteamUser/GetFriendList/v0001/';
 	var params = {
 		key: this.deveploer_key,
@@ -49,7 +51,7 @@ SteamApi.prototype.GetFriendList = function(req, res, steam_id, callback){
 		type: 'json'
 	};
 	
-	ApiRequest(hostname, path, params, callback);
+	return ApiRequest(hostname, path, params);
 };
 
 module.exports = SteamApi;
