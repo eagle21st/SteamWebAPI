@@ -2,7 +2,7 @@
   "author": "Yang Shu",
   "name": "steam-webapi",
   "description": "openid auth, web api wrappers",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/eagle21st/SteamWebAPI.git"
