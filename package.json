@@ -4,7 +4,8 @@
   "description": "openid auth, web api wrappers",
   "version": "0.0.2",
   "repository": {
-    "url": ""
+    "type": "git",
+    "url": "https://github.com/eagle21st/SteamWebAPI.git"
   },
   "main": "./src/steam.js",
   "keywords": [
