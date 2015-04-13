@@ -9,14 +9,6 @@ function AuthenticationError(message){
 
 AuthenticationError.prototype = Error.prototype;
 
-
-function LocationError(message){
-	this.name = "LocationError";
-    this.message = (message || "Location URL Error");
-}
-
-LocationError.prototype = Error.prototype;
-
 function SteamAuth(verify_callback, realm){
 	try{
 		this.relyingParty = new openid.RelyingParty(
@@ -26,18 +18,16 @@ function SteamAuth(verify_callback, realm){
 			false, // Strict mode
 			[]); // List of extensions to enable and include
 	}catch(e){
-		console.error(e);
+		throw new AuthenticationError(e);
 	}
 }
 
 SteamAuth.prototype.authenticate = function(req, res){
 	this.relyingParty.authenticate(identifier, false, function(error, authUrl){
 		if (error){
-			var err1 = new AuthenticationError();
-			throw err1;
+			throw new AuthenticationError(error);
 		}else if (!authUrl){
-			var err2 = new AuthenticationError();
-			throw err2;
+			throw new AuthenticationError('Auth url not defined');
 		}else{
 			res.redirect(authUrl);
 		}
@@ -47,7 +37,7 @@ SteamAuth.prototype.authenticate = function(req, res){
 SteamAuth.prototype.verify = function(req, res, callback){
 	this.relyingParty.verifyAssertion(req, function(error, result){
 		if(error){
-			console.error(error);
+			throw new AuthenticationError(error);
 		}else if(!result.authenticated){
 			var err = new AuthenticationError();
 			throw err;
@@ -58,7 +48,7 @@ SteamAuth.prototype.verify = function(req, res, callback){
 				res.locals.steamID = steamIDURL.match(/\/id\/(.*)/)[1];
 				callback && callback(res.locals.steamID);
 			}catch(e){
-				console.error(e, steamIDURL);
+				throw new AuthenticationError(e);
 			}
 		}
 	});

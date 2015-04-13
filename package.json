@@ -14,8 +14,7 @@
     "openid"
   ],
   "dependencies": {
-    "bluebird": "^2.9.15",
-    "request": "~2.34.0"
+    "request-promise": "~0.4.2"
   },
   "engines": [
     "node >= v0.10.25"

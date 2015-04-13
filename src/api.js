@@ -1,15 +1,13 @@
 //  you must have a deployer key to use steam web api
-var request = require('request'),
+var rp = require('request-promise'),
 	hostname = 'http://api.steampowered.com',
-	utils = require('../lib/utils.js'),
-	Promise = require('bluebird');
+	utils = require('../lib/utils.js');
 
 function SteamApi(deveploer_key){
 	this.deveploer_key = deveploer_key;
 }
 
 function ApiRequest(hostname, path, params){
-	var deferred = Promise.defer();
 	var payload = '';
 	for(var key in params){
 		if(params[key] === undefined){
@@ -18,16 +16,7 @@ function ApiRequest(hostname, path, params){
 		payload += ((payload.indexOf('?')==-1 ? '?':'&')+key+'='+params[key]);
 	}
 	var url = hostname + path + payload;
-	request.get(url, function(error, response, body){
-		if(error){
-			deferred.reject(error);
-		}else if(response.statusCode == 200){
-			deferred.resolve(JSON.parse(body));
-		}else{
-			deferred.reject({error: response.statusCode + ': no response'});
-		}
-	});
-	return deferred.promise;
+	return rp(url);
 }
 
 SteamApi.prototype.GetPlayerSummaries = function(steam_ids){
