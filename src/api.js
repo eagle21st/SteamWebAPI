@@ -3,8 +3,8 @@ var rp = require('request-promise'),
 	hostname = 'http://api.steampowered.com',
 	utils = require('../lib/utils.js');
 
-function SteamApi(deveploer_key){
-	this.deveploer_key = deveploer_key;
+function SteamApi(developerKey){
+	this.developerKey = developerKey;
 }
 
 function ApiRequest(hostname, path, params){
@@ -19,23 +19,23 @@ function ApiRequest(hostname, path, params){
 	return rp(url);
 }
 
-SteamApi.prototype.GetPlayerSummaries = function(steam_ids){
-	// steam_ids should be id1,id2,id3...
-	if (utils.isArray(steam_ids)) steam_ids = utils.flattenArray(steam_ids);
+SteamApi.prototype.GetPlayerSummaries = function(steamIds){
+	// steamIds should be id1,id2,id3...
+	if (utils.isArray(steamIds)) steamIds = utils.flattenArray(steamIds);
 	var path = '/ISteamUser/GetPlayerSummaries/v0002/';
 	var params = {
-		key: this.deveploer_key,
-		steamids: steam_ids,
+		key: this.developerKey,
+		steamids: steamIds,
 		type: 'json'
 	};
 	return ApiRequest(hostname, path, params);
 };
 
-SteamApi.prototype.GetFriendList = function(steam_id){
+SteamApi.prototype.GetFriendList = function(steamId){
 	var path = '/ISteamUser/GetFriendList/v0001/';
 	var params = {
-		key: this.deveploer_key,
-		steamid: steam_id,
+		key: this.developerKey,
+		steamid: steamId,
 		relationship: 'friend',
 		type: 'json'
 	};
