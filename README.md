@@ -4,9 +4,9 @@ steam web api
 
 # Usage
 ```
-	var steam = require('steam-webapi'),
-		auth = new steam.Auth(<verify_callback_url>, <realm>),
-		api = new steam.Api(<steam_key>);
+var steam = require('steam-webapi'),
+	auth = new steam.Auth(<verify_callback_url>, <realm>),
+	api = new steam.Api(<steam_key>);
 ```
 ## OpenID Login:
 ### handle login request from user: 
