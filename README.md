@@ -9,12 +9,10 @@ steam web api
 		api = new steam.Api(<steam_key>);
 ```
 ## OpenID Login:
-	handle login request from user: 
-		`auth.authenticate(req,res)`
-	handle callback request from steam: 
-		```
-		auth.verify(req, res, function(steamId) {
-			// do something with steamid
-		});
-		```
+### handle login request from user: 
+	auth.authenticate(req,res)
+### handle callback request from steam: 
+	auth.verify(req, res, function(steamId) {
+		// do something with steamid
+	});
 
