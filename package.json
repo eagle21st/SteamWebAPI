@@ -14,7 +14,8 @@
     "openid"
   ],
   "dependencies": {
-    "request-promise": "~0.4.2"
+    "request-promise": "~0.4.2",
+    "underscore": "~1.8.3"
   },
   "engines": [
     "node >= v0.10.25"
