@@ -15,5 +15,4 @@ var steam = require('steam-webapi'),
 	auth.verify(req, res, function(steamId) {
 		// do something with steamid
 	});
->>>>>>> 988623b06eadddfe147a608562a01b8bb707ef3c
 
