@@ -1,10 +1,12 @@
 steam web api
 -------------
 
+# Install
+```npm install steam-auth --save```
 
 # Usage
 ```
-var steam = require('steam-webapi'),
+var steam = require('steam-auth'),
 	auth = new steam.Auth(<verify_callback_url>, <realm>),
 	api = new steam.Api(<steam_key>);
 ```
